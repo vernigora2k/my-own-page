@@ -9,13 +9,29 @@ import MainMenu from './components/MainMenu';
 function App() {
   const [isToggled, setIsToggled] = useState(false)
 
+  const location = useLocation()
+
+  const transition = useTransition(location, location => location.pathname, {
+    from: {
+      opacity: 0,
+      transform: 'translateX(100%)',
+    },
+    enter: {
+      opacity: 1,
+      transform: 'translateX(0%)',
+    },
+    leave: {
+      opacity: 0,
+      transform: 'translateX(-100%)',
+    },
+  })
+
   const toggleHandler = () => {
     setIsToggled(!isToggled)
   }
 
   return (
-    <Fragment>
-      <BrowserRouter>
+    <section style={{position: 'relative', overflow: 'hidden', minHeight: '100vh'}}> 
       <div className="menu-button">
         <MainMenu toggled={isToggled} toggleHandler={toggleHandler}/>
         {/* <button onClick={toggleHandler}>menu</button> */}
@@ -25,13 +41,20 @@ function App() {
           <span></span>
         </div>
       </div>
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/portfolio' component={Portfolio} />
-          <Route path='/contacts' component={Contacts} />
-        </Switch>
-      </BrowserRouter>
-    </Fragment>
+      {
+        transition.map(({item, props, key}) => (
+          <animated.div key={key} style={props}>
+            <div style={{position: 'absolute', width: '100%'}}>
+              <Switch location={item}>
+                <Route exact path='/' component={Home} />
+                <Route path='/portfolio' component={Portfolio} />
+                <Route path='/contacts' component={Contacts} />
+              </Switch>
+            </div>
+          </animated.div>
+        ))
+      } 
+    </section>
   );
 }
 

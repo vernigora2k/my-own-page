@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import './home.scss';
+import { Link } from 'react-router-dom';
 
 export const Home = () => {
     return (
@@ -15,7 +16,7 @@ export const Home = () => {
                         </div>
                         <div className="card-action">
                         <a href="#">This is a link</a>
-                        <a href="#">This is a link</a>
+                        <Link to="/portfolio">Portfolio</Link>
                         </div>
                     </div>
                 </div>
