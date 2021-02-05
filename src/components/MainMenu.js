@@ -12,8 +12,8 @@ const MainMenu = ({ toggled, toggleHandler }) => {
         {transform: x.interpolate(x => `translate3d(${x * -1}%, 0, 0)`)}
     }>
         <nav>
-            
             <Link to="/" onClick={toggleHandler}>Home</Link>
+            <Link to="/laboratory" onClick={toggleHandler}>Code laboratory</Link>
             <Link to="/portfolio" onClick={toggleHandler}>Portfolio</Link>
             <Link to="/contacts" onClick={toggleHandler}>Contacts</Link>
         </nav>

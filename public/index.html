@@ -10,6 +10,7 @@
       content="Web site created using create-react-app"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -27,6 +28,25 @@
     <title>React App</title>
   </head>
   <body>
+    <script>
+      // Place this code in the head section of your HTML file 
+      (function(r, d, s) {
+        r.loadSkypeWebSdkAsync = r.loadSkypeWebSdkAsync || function(p) {
+          var js, sjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(p.id)) { return; }
+          js = d.createElement(s);
+          js.id = p.id;
+          js.src = p.scriptToLoad;
+          js.onload = p.callback
+          sjs.parentNode.insertBefore(js, sjs);
+        };
+        var p = {
+          scriptToLoad: 'https://swx.cdn.skype.com/shared/v/latest/skypewebsdk.js',
+          id: 'skype_web_sdk'
+        };
+        r.loadSkypeWebSdkAsync(p);
+      })(window, document, 'script');
+      </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

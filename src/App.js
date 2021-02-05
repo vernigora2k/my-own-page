@@ -5,6 +5,7 @@ import { Home } from './pages/Home';
 import { Portfolio } from './pages/Portfolio';
 import { Contacts } from './pages/Contacts';
 import MainMenu from './components/MainMenu';
+import { Laboratory } from './pages/Laboratory';
 
 function App() {
   const [isToggled, setIsToggled] = useState(false)
@@ -47,6 +48,7 @@ function App() {
             <div style={{position: 'absolute', width: '100%'}}>
               <Switch location={item}>
                 <Route exact path='/' component={Home} />
+                <Route path='/laboratory' component={Laboratory} />
                 <Route path='/portfolio' component={Portfolio} />
                 <Route path='/contacts' component={Contacts} />
               </Switch>

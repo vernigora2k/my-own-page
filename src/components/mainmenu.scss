@@ -4,7 +4,6 @@
     bottom: 0;
     right: 0;
     left: 0;
-    // height: 300px;
     z-index: 9;
 }
 
@@ -57,17 +56,6 @@
 
 }
 
-/* Icon burger */
-// .menu-button__hamburger {
-//     position: absolute;
-//     font-weight: bold;
-//     top: 10px;
-//     right: 10px;
-//     padding: 10px 20px;
-//     cursor: pointer;
-//     z-index: 10;
-// }
-
 #nav-icon1, #nav-icon2, #nav-icon3, #nav-icon4 {
     width: 60px;
     height: 45px;
@@ -79,10 +67,10 @@
     -moz-transform: rotate(0deg);
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
-    -webkit-transition: .5s ease-in-out;
-    -moz-transition: .5s ease-in-out;
-    -o-transition: .5s ease-in-out;
-    transition: .5s ease-in-out;
+    -webkit-transition: .9s cubic-bezier(0.165, 0.84, 0.44, 1);
+    -moz-transition: .9s cubic-bezier(0.165, 0.84, 0.44, 1);
+    -o-transition: .9s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: .9s cubic-bezier(0.165, 0.84, 0.44, 1);
     cursor: pointer;
     z-index: 10;
   }
@@ -92,7 +80,8 @@
     position: absolute;
     height: 4px;
     width: 100%;
-    background: #d3531a;
+    // background: #d3531a;
+    background: gray;
     border-radius: 9px;
     opacity: 1;
     left: 0;
@@ -170,4 +159,7 @@
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -o-transform: rotate(90deg);
+    
   }
+
+  
