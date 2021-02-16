@@ -2,15 +2,21 @@ import React, { Fragment, useEffect, useState } from 'react';
 import './home.scss';
 import { Link } from 'react-router-dom';
 import MainTyped from '../components/MainTyped';
+import { GameDestroy } from '../components/GameDestroy';
 
 export const Home = () => {
     const [isShow, setIsShow] = useState(false)
+    const [isShowGame, setIsShowGame] = useState(false)
 
     useEffect(() => {
         setTimeout(() => {
             setIsShow(!isShow)
         }, 2000)
     }, [])
+
+    const startGame = () => {
+        setIsShowGame(!isShowGame)
+    }
 
     return (
         <section className="home">
@@ -28,6 +34,8 @@ export const Home = () => {
                     <div className="arrow-right__down"></div>
                 </nav> 
             </Link>
+            <button onClick={startGame} className={"home__game-btn" + (isShow ? " show-element" : '')}>Destroy my page</button>
+            {isShowGame && <GameDestroy />}
         </section>
     )
 }

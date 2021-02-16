@@ -278,3 +278,15 @@ h6.home__description:nth-child(3) {
     transform: translateX(-50%) translateY(-50%) scale(0.9);
   }
 }
+
+.home__game-btn {
+  position: fixed;
+  margin-top: 350px;
+  padding: 5px 15px;
+  opacity: 0;
+  transition: all 2s;
+
+  &.show-element {
+    opacity: 1;
+  }
+}
