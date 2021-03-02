@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import './home.scss';
 import { Link } from 'react-router-dom';
 import MainTyped from '../components/MainTyped';
-import { GameDestroy } from '../components/GameDestroy';
+import { Game } from '../components/Game';
 
 export const Home = () => {
     const [isShow, setIsShow] = useState(false)
@@ -35,7 +35,7 @@ export const Home = () => {
                 </nav> 
             </Link>
             <button onClick={startGame} className={"home__game-btn" + (isShow ? " show-element" : '')}>Destroy my page</button>
-            {isShowGame && <GameDestroy />}
+            {isShowGame && <Game />}
         </section>
     )
 }
