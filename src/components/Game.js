@@ -23,13 +23,13 @@ export const Game = ({ width, height }: CanvasProps) => {
 
             function spawnEnemies() {
                 setInterval(() => {
-                    const x = 100
+                    const x = Math.random() * canvas.width
                     const y = 100
-                    const radius = 30
+                    const radius = Math.random() * (30 - 4) + 5
                     const color = 'green'
                     
                     const angle = Math.atan2(
-                        canvas.height / 1.1 - y,           //height
+                        canvas.height / 1.1 - y,           
                         canvas.width / 2 - x
                         )
                     const velocity =  {
@@ -50,8 +50,20 @@ export const Game = ({ width, height }: CanvasProps) => {
                     projectile.update()
                 })
 
-                enemies.forEach(enemy => {
+                enemies.forEach((enemy, index) => {
                     enemy.update()
+
+                    projectiles.forEach((projectile, projectileIndex) => {
+                        const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
+                        
+                        //objects touch
+                        if (dist - enemy.radius - projectile.radius < 1) {
+                            setTimeout(() => {
+                                enemies.splice(index, 1)
+                                projectiles.splice(projectileIndex, 1)
+                            }, 0)
+                        }
+                    })
                 })
             }
             
