@@ -17,7 +17,7 @@ export const Game = ({ width, height }: CanvasProps) => {
            
             const x = canvas.width / 2
             const y = canvas.height / 1.1
-            const player = new Player(x, y, 30, 'blue')
+            const player = new Player(x, y, 10, 'white')
             const projectiles = []
             const enemies = []
 
@@ -26,7 +26,7 @@ export const Game = ({ width, height }: CanvasProps) => {
                     const x = Math.random() * canvas.width
                     const y = 100
                     const radius = Math.random() * (30 - 4) + 5
-                    const color = 'green'
+                    const color = `hsl(${Math.random() * 360}, 50%, 50%)`
                     
                     const angle = Math.atan2(
                         canvas.height / 1.1 - y,           
@@ -37,21 +37,45 @@ export const Game = ({ width, height }: CanvasProps) => {
                         y: Math.sin(angle),
                     }
                     enemies.push(new Enemy(x, y, radius, color, velocity))
-                    console.log(enemies)
                 }, 1000)
             }
 
+            let animationId
             function animate() {
-                requestAnimationFrame(animate)
-                context.clearRect(0, 0, canvas.width, canvas.height)
+                animationId = requestAnimationFrame(animate)
+
+                context.fillStyle = 'rgba(0, 0, 0, 0.1)'
+                context.fillRect(0, 0, canvas.width, canvas.height)
+
+                // context.clearRect(0, 0, canvas.width, canvas.height)
                 player.draw()
 
-                projectiles.forEach(projectile => {
+                projectiles.forEach((projectile, index) => {
                     projectile.update()
+
+                    //remove from edges of screen
+                    if (
+                        projectile.x + projectile.radius < 0 || 
+                        projectile.x - projectile.radius > canvas.width ||
+                        projectile.y + projectile.radius < 0  ||
+                        projectile.y - projectile.radius > canvas.height
+                        ) {
+                        setTimeout(() => {
+                            projectiles.splice(index, 1)
+                        }, 0)
+                    }
                 })
 
                 enemies.forEach((enemy, index) => {
                     enemy.update()
+
+                    const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y)
+
+                    // end game
+                    if (dist - enemy.radius - player.radius < 1) {
+                        console.log('game over')
+                        cancelAnimationFrame(animationId)
+                    }
 
                     projectiles.forEach((projectile, projectileIndex) => {
                         const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
@@ -68,19 +92,20 @@ export const Game = ({ width, height }: CanvasProps) => {
             }
             
             window.addEventListener('click', (e) => {
+                console.log(projectiles)
                 const angle = Math.atan2(
                     e.clientY - canvas.width / 2, 
                     e.clientX - canvas.width / 2
                     )
                 const velocity =  {
-                    x: Math.cos(angle),
-                    y: Math.sin(angle),
+                    x: Math.cos(angle) * 5,
+                    y: Math.sin(angle) * 5,
                 }
                 projectiles.push(new Projectile(
                     canvas.width / 2, 
                     canvas.height / 1.1, 
                     5, 
-                    'red', 
+                    'white', 
                     velocity
                 ))
             })
