@@ -6,6 +6,7 @@ interface CanvasProps {
     height: number;
 }
 
+
 export const Game = ({ width, height }: CanvasProps) => {
     const canvasRef = useRef(null);
     let context;
@@ -82,8 +83,10 @@ export const Game = ({ width, height }: CanvasProps) => {
                         
                         //objects(projectiles) touch enemy
                         if (dist - enemy.radius - projectile.radius < 1) {
-                            if (enemy.radius - 10 > 10) {
-                                enemy.radius -= 10
+                            if (enemy.radius - 10 > 5) {
+                                window.gsap.to(enemy, {
+                                    radius: enemy.radius - 10
+                                })
                                 setTimeout(() => {
                                     projectiles.splice(projectileIndex, 1)
                                 }, 0)
