@@ -21,6 +21,7 @@ export const Game = ({ width, height }: CanvasProps) => {
             const player = new Player(x, y, 10, 'white')
             const projectiles = []
             const enemies = []
+            const particles = []
 
             function spawnEnemies() {
                 setInterval(() => {
@@ -50,7 +51,13 @@ export const Game = ({ width, height }: CanvasProps) => {
 
                 // context.clearRect(0, 0, canvas.width, canvas.height)
                 player.draw()
-
+                particles.forEach((particle, index) => {
+                    if (particle.alpha <= 0) {
+                        particles.splice(index, 1)
+                    } else {
+                        particle.update()
+                    }
+                })
                 projectiles.forEach((projectile, index) => {
                     projectile.update()
 
@@ -83,6 +90,20 @@ export const Game = ({ width, height }: CanvasProps) => {
                         
                         //objects(projectiles) touch enemy
                         if (dist - enemy.radius - projectile.radius < 1) {
+                            //create explosions
+                            for (let i = 0; i < enemy.radius * 2; i++) {
+                                particles.push(new Particle(
+                                                    projectile.x, 
+                                                    projectile.y, 
+                                                    Math.random() * 2, 
+                                                    enemy.color, 
+                                                    {
+                                                        x: (Math.random() - 0.5) * (Math.random() * 8), 
+                                                        y: (Math.random() - 0.5) * (Math.random() * 8)
+                                                    }
+                                                ))
+                            }
+
                             if (enemy.radius - 10 > 5) {
                                 window.gsap.to(enemy, {
                                     radius: enemy.radius - 10
@@ -184,6 +205,34 @@ export const Game = ({ width, height }: CanvasProps) => {
             this.draw()
             this.x = this.x + this.velocity.x
             this.y = this.y + this.velocity.y
+        }
+    }
+
+    class Particle {
+        constructor(x, y, radius, color, velocity) {
+            this.x = x
+            this.y = y
+            this.radius = radius
+            this.color = color
+            this.velocity = velocity
+            this.alpha = 1
+        }
+
+        draw() {
+            context.save()
+            context.globalAlpha = this.alpha
+            context.beginPath()
+            context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+            context.fillStyle = this.color
+            context.fill()
+            context.restore()
+        }
+
+        update()  {
+            this.draw()
+            this.x = this.x + this.velocity.x
+            this.y = this.y + this.velocity.y
+            this.alpha -= 0.01
         }
     }
 
